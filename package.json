@@ -1,0 +1,10 @@
+{
+  "name": "bashicu-matrix-system",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "mocha js/prss.test.js"
+  },
+  "devDependencies": {
+    "mocha": "^9.1.3"
+  }
+}
