@@ -1,3 +1,5 @@
+// PrSS class for primitive sequence system
+
 class PrSS {
     constructor(array) {
         if (!Array.isArray(array)) {
