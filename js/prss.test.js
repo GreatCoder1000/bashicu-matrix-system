@@ -35,6 +35,9 @@ describe('PrSS', function () {
     let prss = new PrSS([0, 1, 2, 3]);
     assert.deepStrictEqual(prss.eval().sequence, [0, 1, 2, 2, 2, 2]);
 
+    prss = new PrSS([0, 1, 2, 3, 4, 1]);
+    assert.deepStrictEqual(prss.eval().sequence, [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4]);
+
     prss = new PrSS([0, 1]);
     assert.deepStrictEqual(prss.eval().sequence, [0, 0, 0, 0]);
   });
