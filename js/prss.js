@@ -50,3 +50,5 @@ class PrSS {
         return new PrSS(s.map(() => this.sequence[i]).concat(new Array(base).fill(this.sequence[i])));
     }
 }
+
+module.exports = PrSS;
