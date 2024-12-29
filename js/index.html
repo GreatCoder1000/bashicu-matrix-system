@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PrSS Example</title>
-    <script src="prss.js"></script>
-    <script>
+    <script type="module">
+        import { PrSS } from './prss.js';
+
         function usePrSS() {
             const input = document.getElementById('sequenceInput').value;
             try {
@@ -20,14 +21,17 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', usePrSS);
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('sequenceInput').value = '(0)(1)(2)';
+            document.querySelector('button').addEventListener('click', usePrSS);
+        });
     </script>
 </head>
 <body>
     <h1>PrSS Example</h1>
     <label for="sequenceInput">Enter sequence (e.g., (0)(1)(2)):</label>
     <input type="text" id="sequenceInput" value="(0)(1)(2)">
-    <button onclick="usePrSS()">Submit</button>
+    <button>Submit</button>
     <div id="provided"></div><br>
     <div id="output"></div>
 </body>
