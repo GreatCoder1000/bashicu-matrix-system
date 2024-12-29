@@ -47,7 +47,7 @@ class PrSS {
                 return new PrSS(t.concat(s.concat(new Array(base + 1).fill(this.sequence[i]))));
             }
         }
-        return new PrSS(s.concat(new Array(base).fill(bad)));
+        return new PrSS(s.concat(new Array(base * 4).fill(bad)));
     }
 }
 
