@@ -1,3 +1,11 @@
+function repeatArray(arr, count) { 
+    let result = []; 
+    for (let i = 0; i < count; i++) { 
+        result = result.concat(arr); 
+    } 
+    return result; 
+}
+
 class PrSS {
     constructor(array) {
         if (!Array.isArray(array)) {
@@ -44,10 +52,10 @@ class PrSS {
             s.unshift(this.sequence[i]);
             if (this.sequence[i] < bad) {
                 const t = this.sequence.slice(0, i);
-                return new PrSS(t.concat(s.concat(new Array(base + 1).fill(this.sequence[i]))));
+                return new PrSS(t.concat(repeatArray(s, base + 1));
             }
         }
-        return new PrSS(s.concat(new Array(base).fill(bad)));
+        return new PrSS(repeatArray(s, base);
     }
 }
 
