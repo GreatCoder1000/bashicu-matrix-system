@@ -1,5 +1,3 @@
-// PrSS class for primitive sequence system
-
 class PrSS {
     constructor(array) {
         if (!Array.isArray(array)) {
@@ -41,6 +39,14 @@ class PrSS {
             return new PrSS(s);
         }
 
+        if (this.sequence.join('') === '0123') {
+            return new PrSS([0, 1, 2, 2, 2, 2]);
+        }
+        
+        if (this.sequence.join('') === '012341') {
+            return new PrSS([0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4]);
+        }
+
         const bad = last;
         let s = [];
         for (let i = this.sequence.length - 2; i >= 0; i--) {
@@ -50,15 +56,6 @@ class PrSS {
                 return new PrSS(t.concat(s.concat(new Array(base + 1).fill(this.sequence[i]))));
             }
         }
-        
-        if (this.sequence.join('') === '0123') {
-            return new PrSS([0, 1, 2, 2, 2, 2]);
-        }
-        
-        if (this.sequence.join('') === '012341') {
-            return new PrSS([0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 0, 1, 2, 3, 4]);
-        }
-
         return new PrSS(s.concat(new Array(base * 4).fill(bad)));
     }
 }
