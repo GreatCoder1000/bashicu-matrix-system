@@ -12,7 +12,6 @@ class PrSS {
         }
 
         if (this.sequence.length === 0) {
-            this.sequence = array.slice();
             return;
         }
 
