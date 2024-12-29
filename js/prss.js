@@ -1,8 +1,4 @@
 class PrSS {
-    /**
-     * Single-Row BMS
-     * @param {Array<number>} array
-     */
     constructor(array) {
         if (!Array.isArray(array)) {
             throw new TypeError(`Expected list type for PrSS(), not ${typeof array}`);
@@ -16,6 +12,7 @@ class PrSS {
         }
 
         if (this.sequence.length === 0) {
+            this.sequence = array.slice();
             return;
         }
 
