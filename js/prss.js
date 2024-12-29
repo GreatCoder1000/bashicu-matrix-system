@@ -52,11 +52,11 @@ class PrSS {
             s.unshift(this.sequence[i]);
             if (this.sequence[i] < bad) {
                 const t = this.sequence.slice(0, i);
-                return new PrSS(t.concat(repeatArray(s, base + 1));
+                return new PrSS(t.concat(repeatArray(s, base + 1)));
             }
         }
-        return new PrSS(repeatArray(s, base);
+        return new PrSS(repeatArray(s, base));
     }
 }
 
-module.exports = PrSS;
+export { PrSS, repeatArray };
