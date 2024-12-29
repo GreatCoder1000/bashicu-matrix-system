@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrSS Example</title>
+    <script src="js/prss.js"></script>
+    <script>
+        function usePrSS() {
+            const input = document.getElementById('sequenceInput').value;
+            try {
+                const sequence = input.match(/\d+/g).map(Number);
+                const prssInstance = new PrSS(sequence);
+                document.getElementById('output').textContent = prssInstance.toString();
+            } catch (error) {
+                console.error(error);
+                document.getElementById('output').textContent = `Error: ${error.message}`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', usePrSS);
+    </script>
+</head>
+<body>
+    <h1>PrSS Example</h1>
+    <label for="sequenceInput">Enter sequence (e.g., (0)(1)(2)):</label>
+    <input type="text" id="sequenceInput" value="(0)(1)(2)">
+    <button onclick="usePrSS()">Submit</button>
+    <div id="output"></div>
+</body>
+</html>
