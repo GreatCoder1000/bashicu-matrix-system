@@ -80,7 +80,7 @@
                 while (len < MAX_ENTRIES) {
                     currentPrSS = prssInstance.eval(base);
                     len = currentPrss.sequence.length;
-                    document.getElementById('output').innerHTML = '<br>'.concat(currentPrSS.toString();
+                    document.getElementById('output').innerHTML += '<br>'.concat(currentPrSS.toString());
                 }
             } catch (error) {
                 console.error(error);
