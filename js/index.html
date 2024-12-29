@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PrSS Example</title>
     <script>
+        const MAX_ENTRIES = 30;
+        
         function repeatArray(arr, count) { 
             let result = []; 
             for (let i = 0; i < count; i++) { 
@@ -73,8 +75,13 @@
                 const sequence = input.match(/\d+/g).map(Number);
                 const prssInstance = new PrSS(sequence);
                 document.getElementById('provided').textContent = prssInstance.toString();
-                const expandedPrSS = prssInstance.eval(base); // Evaluate the PrSS instance
-                document.getElementById('output').textContent = expandedPrSS.toString(); // Print the expanded version
+                let currentPrSS = prssInstance;
+                let len = currentPrSS.sequence.length;
+                while (len < MAX_ENTRIES) {
+                    currentPrSS = prssInstance.eval(base);
+                    len = currentPrss.sequence.length;
+                    document.getElementById('output').innerHTML = '<br>'.concat(currentPrSS.toString();
+                }
             } catch (error) {
                 console.error(error);
                 document.getElementById('output').textContent = `Error: ${error.message}`;
