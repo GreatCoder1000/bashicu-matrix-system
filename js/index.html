@@ -11,7 +11,9 @@
             try {
                 const sequence = input.match(/\d+/g).map(Number);
                 const prssInstance = new PrSS(sequence);
-                document.getElementById('output').textContent = prssInstance.toString();
+                document.getElementById('provided').textContent = prssInstance.toString();
+                const expandedPrSS = prssInstance.eval(); // Evaluate the PrSS instance
+                document.getElementById('output').textContent = expandedPrSS.toString(); // Print the expanded version
             } catch (error) {
                 console.error(error);
                 document.getElementById('output').textContent = `Error: ${error.message}`;
@@ -26,6 +28,7 @@
     <label for="sequenceInput">Enter sequence (e.g., (0)(1)(2)):</label>
     <input type="text" id="sequenceInput" value="(0)(1)(2)">
     <button onclick="usePrSS()">Submit</button>
+    <div id="provided"></div><br>
     <div id="output"></div>
 </body>
 </html>
