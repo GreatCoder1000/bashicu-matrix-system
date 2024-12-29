@@ -32,22 +32,22 @@ class PrSS {
         if (this.sequence.length === 0) {
             throw new Error("Cannot evaluate an empty sequence.");
         }
-    
+
         if (this.sequence[this.sequence.length - 1] === 0) {
             const s = this.sequence.slice(0, -1);
             return new PrSS(s);
         }
-    
+
         const bad = this.sequence[this.sequence.length - 1];
         let s = [];
         for (let i = this.sequence.length - 2; i >= 0; i--) {
             s.unshift(this.sequence[i]);
             if (this.sequence[i] < bad) {
                 const t = this.sequence.slice(0, i);
-                return new PrSS(t.concat(s.concat(new Array(base).fill(this.sequence[i]))));
+                return new PrSS(t.concat(s.concat(new Array(base + 1).fill(this.sequence[i]))));
             }
         }
-        return new PrSS(s.concat(new Array(base + 1).fill(bad)));
+        return new PrSS(s.concat(new Array(base).fill(bad)));
     }
 }
 
