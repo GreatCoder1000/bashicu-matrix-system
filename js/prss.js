@@ -57,10 +57,6 @@ class PrSS {
             }
         }
 
-        if (this.sequence.join('') === '012342') {
-            return new PrSS([0, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]);
-        }
-
         return new PrSS(s.concat(new Array(base * 4).fill(bad)));
     }
 }
