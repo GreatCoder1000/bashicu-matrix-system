@@ -77,7 +77,7 @@
                 document.getElementById('provided').textContent = prssInstance.toString();
                 let currentPrSS = prssInstance;
                 let len = currentPrSS.sequence.length;
-                document.getElementById('output').innerHTML = currentPrSS.eval().toString();
+                document.getElementById('output').innerHTML = currentPrSS.eval(base).toString();
                 /*while (len < MAX_ENTRIES && currentPrSS.toString !== '') {
                     currentPrSS = prssInstance.eval(base);
                     len = currentPrSS.sequence.length;
