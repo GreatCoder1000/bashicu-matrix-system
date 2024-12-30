@@ -77,12 +77,12 @@
                 document.getElementById('provided').textContent = prssInstance.toString();
                 let currentPrSS = prssInstance;
                 let len = currentPrSS.sequence.length;
-                document.getElementById('output').innerHTML = '';
-                while (len < MAX_ENTRIES && currentPrSS.toString !== '') {
+                document.getElementById('output').innerHTML = currentPrss.eval().toString();
+                /*while (len < MAX_ENTRIES && currentPrSS.toString !== '') {
                     currentPrSS = prssInstance.eval(base);
                     len = currentPrSS.sequence.length;
                     document.getElementById('output').innerHTML += '<br>'.concat(currentPrSS.toString());
-                }
+                }*/
             } catch (error) {
                 console.error(error);
                 document.getElementById('output').textContent = `Error: ${error.message}`;
@@ -101,8 +101,8 @@
     <input type="text" id="sequenceInput" value="(0)(1)(2)"><br>
     <label for="base">Base:</label>
     <input type="number" id="base" value="3">
-    <button>Submit</button>
-    <div id="provided"></div><br>
+    <button>Submit</button><br>
+    <div id="provided"></div>
     <div id="output"></div>
 </body>
 </html>
