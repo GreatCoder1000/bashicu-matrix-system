@@ -6,6 +6,183 @@
     <link rel="stylesheet" href="../styles.css">
     <title>PrSS Example</title>
     <script>
+        function primseq(seq) {
+            // Convert primitive sequence to ordinal
+            // Check input sequence
+            try {
+                if (seq.length === 0) {
+                    return 'Empty sequence';
+                }
+            } catch (e) {
+                return 'Invalid sequence';
+            }
+            for (let i = 0; i < seq.length; i++) {
+                try {
+                    if (parseInt(seq[i]) < 0) {
+                        return 'Number should be positive';
+                    }
+                } catch (e) {
+                    return 'Invalid number';
+                }
+            }
+            // Convert to standard sequence
+            seq = standard(seq);
+            let right = seq.length - 1;
+            let ord;
+            for (let i = right; i >= 0; i--) {
+                if (seq[i] !== seq[right]) {
+                    ord = (right - i).toString();
+                    break;
+                }
+            }
+            if (i === 0 && seq[0] === seq[right]) {
+                return (right - i + 1).toString();
+            }
+            ord = prim(seq.slice(0, i + 1), seq[i + 1], ord);
+            return ord;
+        }
+        
+        function prim(seq, num, ord) {
+            if (seq[seq.length - 1] < num) {
+                if (ord === '1') {
+                    ord = 'w';
+                } else {
+                    if (ord.includes('+') || ord.includes('^')) {
+                        ord = 'w^(' + ord + ')';
+                    } else {
+                        ord = 'w^' + ord;
+                    }
+                }
+                if (seq.length === 1) {
+                    return ord;
+                }
+                ord = prim(seq.slice(0, seq.length - 1), seq[seq.length - 1], ord);
+                return ord;
+            }
+            // A + B
+            for (let i = seq.length - 1; i >= 0; i--) {
+                if (seq[i] === num) {
+                    break;
+                }
+            }
+            ord = primseq(seq.slice(i)) + '+' + ord;
+            if (i === 0) {
+                return ord;
+            }
+            ord = prim(seq.slice(0, i), seq[i], ord);
+            return ord;
+        }
+        
+        function standard(seq) {
+            // Convert sequence to standard expression
+            // Start from 0: [1,2,3] -> [0,1,2]
+            // Increment with 1: [0,2,4] -> [0,1,2]
+            let st = stand(seq);
+            while (st.length < seq.length) {
+                seq = st;
+                st = stand(seq);
+            }
+            return st;
+        }
+        
+        function stand(seq) {
+            let st = [];
+            let offset = parseInt(seq[0]);
+            let nextoffset = offset;
+            let prev = 0;
+            for (let i = 0; i < seq.length; i++) {
+                offset = nextoffset;
+                let n = parseInt(seq[i]) - offset;
+                if (n < 0) {
+                    n = 0;
+                    nextoffset = parseInt(seq[i]);
+                }
+                if (n === prev) {
+                    if (i === 0) {
+                        st.push(0);
+                    } else {
+                        st.push(st[i - 1]);
+                    }
+                }
+                if (n > prev) {
+                    st.push(st[i - 1] + 1);
+                }
+                if (n < prev) {
+                    for (let j = i - 1; j >= 0; j--) {
+                        if (n === parseInt(seq[j]) - offset) {
+                            st.push(st[j]);
+                            break;
+                        }
+                        if (n > parseInt(seq[j]) - offset) {
+                            st.push(st[j] + 1);
+                            break;
+                        }
+                    }
+                }
+                prev = n;
+            }
+            // Check canonical
+            // A + B = B when A < B
+            let i = st.length - 1;
+            while (i > 1) {
+                i -= 1;
+                if (st[i - 1] === st[i]) {
+                    for (let j = i; j < st.length; j++) {
+                        if (st[j] < st[i]) {
+                            break;
+                        }
+                        if (st[j] > st[i]) {
+                            if (i === 1) {
+                                st = st.slice(1);
+                            } else {
+                                st = st.slice(0, i - 1).concat(st.slice(i));
+                            }
+                            break;
+                        }
+                    }
+                }
+                if (st[i - 1] > st[i]) {
+                    for (let j = i - 1; j >= 0; j--) {
+                        if (st[j] === st[i]) {
+                            let left = st.slice(j, i);
+                            let right = st.slice(i);
+                            // normalize the left part
+                            let dummy = Array.from({ length: left[0] }, (_, k) => k);
+                            if (dummy.concat(left).toString() !== standard(dummy.concat(left)).toString()) {
+                                return st.slice(0, j).concat(standard(dummy.concat(left)).slice(left[0])).concat(right);
+                            }
+                            let found = false;
+                            let equal = true;
+                            for (let k = 0; k < left.length; k++) {
+                                if (right.length < k + 1) {
+                                    continue;
+                                }
+                                if (left[k] < right[k]) {
+                                    found = true;
+                                }
+                                if (left[k] > right[k]) {
+                                    equal = false;
+                                    break;
+                                }
+                            }
+                            if (equal && !found && left.length < right.length && right[left.length] > right[0]) {
+                                found = true;
+                            }
+                            if (found) {
+                                if (j === 0) {
+                                    return right;
+                                }
+                                st = st.slice(0, j).concat(right);
+                                i = j;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            return st;
+        }
+        
         const MAX_ENTRIES = 30;
         
         function repeatArray(arr, count) { 
@@ -79,6 +256,7 @@
                 let currentPrSS = prssInstance;
                 let len = currentPrSS.sequence.length;
                 document.getElementById('output').innerHTML = currentPrSS.eval(base).toString();
+                document.getElementById('ordinal').textContent = primseq(currentPrSS.sequence)
                 /*while (len < MAX_ENTRIES && currentPrSS.toString !== '') {
                     currentPrSS = prssInstance.eval(base);
                     len = currentPrSS.sequence.length;
@@ -103,6 +281,7 @@
     <label for="base">Base:</label>
     <input type="number" id="base" value="3">
     <button>Submit</button><br>
+    <div id="ordinal"></div><br>
     <div id="provided"></div><br>
     <div id="output"></div>
 </body>
