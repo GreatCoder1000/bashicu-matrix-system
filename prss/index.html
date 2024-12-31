@@ -264,6 +264,7 @@
                 let ord = primseq(currentPrSS.sequence);
                 let ordtex = ord.replace(/w/g, '\\omega').replace(/\(/g, '{').replace(/\)/g, '}');
                 document.getElementById('output').innerHTML = currentPrSS.eval(base).toString();
+                document.getElementById('ord-plaintext').innerHTML = ord;
                 document.getElementById('ordinal').innerHTML = `\\(${ordtex}\\)`;
                 MathJax.typeset();  // Re-render MathJax content
                 /*while (len < MAX_ENTRIES && currentPrSS.toString !== '') {
@@ -289,8 +290,9 @@
     <input type="text" id="sequenceInput" placeholder="(0)(1)(2)" value="(0)(1)(2)"><br>
     <label for="base">Base:</label>
     <input type="number" id="base" value="3">
-    <button>Submit</button><br>
-    Ordinal: <div id="ordinal"></div><br>
+    <button>Submit</button><br><br>
+    Ordinal (TeX): <div id="ordinal"></div><br>
+    Ordinal (plaintext): <div id="ordtext"></div><br>
     Sequence: <div id="provided"></div><br>
     Expanded: <div id="output"></div>
 </body>
