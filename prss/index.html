@@ -260,8 +260,10 @@
                 document.getElementById('provided').textContent = prssInstance.toString();
                 let currentPrSS = prssInstance;
                 let len = currentPrSS.sequence.length;
+                let ord = primseq(currentPrSS.sequence)
+                ordtex = ord.replace(/w/g, '\omega').replace(/(/g, '{').replace(/)/g', '}')
                 document.getElementById('output').innerHTML = currentPrSS.eval(base).toString();
-                document.getElementById('ordinal').innerHTML = primseq(currentPrSS.sequence).replace(/w/g, '&omega;').trim()
+                document.getElementById('ordinal').innerHTML = `${ordtex}`;
                 /*while (len < MAX_ENTRIES && currentPrSS.toString !== '') {
                     currentPrSS = prssInstance.eval(base);
                     len = currentPrSS.sequence.length;
