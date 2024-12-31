@@ -261,7 +261,7 @@
                 let currentPrSS = prssInstance;
                 let len = currentPrSS.sequence.length;
                 document.getElementById('output').innerHTML = currentPrSS.eval(base).toString();
-                document.getElementById('ordinal').innerHTML = primseq(currentPrSS.sequence).replace('w', '&omega;').replace('^', '<sup>').replace('(', '').replace(')', '')
+                document.getElementById('ordinal').innerHTML = primseq(currentPrSS.sequence).replace('w', '&omega;').trim()
                 /*while (len < MAX_ENTRIES && currentPrSS.toString !== '') {
                     currentPrSS = prssInstance.eval(base);
                     len = currentPrSS.sequence.length;
